@@ -1,0 +1,22 @@
+When logging in or signing up on Airbnb, users typically need to provide the following information (props):
+
+### For Signup:
+1. **Email Address**: A valid email for account verification and communication.
+2. **Password**: A secure password for account protection.
+3. **Full Name**: The user's real name for identification.
+4. **Phone Number**: For verification and communication (may require SMS verification).
+5. **Profile Picture**: Optional, but recommended for a more personal touch.
+6. **Date of Birth**: To verify the user is of legal age.
+7. **Address**: Sometimes required for verification purposes.
+8. **Payment Information**: Credit/debit card or other payment methods for future bookings (may be required later).
+
+### For Login:
+1. **Email Address or Username**: The email or username associated with the account.
+2. **Password**: The password for the account.
+3. **Two-Factor Authentication (if enabled)**: A code sent to the user's phone or email for additional security.
+
+### Optional Information:
+- **Social Media Accounts**: Option to sign up or log in using Facebook, Google, or Apple accounts.
+- **Referral Code**: If applicable, to receive discounts or credits.
+
+This information helps ensure a secure and personalized experience on the platform.

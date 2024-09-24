@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disable Dates Example</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <label for="dateInput">Choose a date:</label>
+    <input type="text" id="dateInput">
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        const disabledDates = ['2024-09-25', '2024-09-26', '2024-09-30']; // Array of dates to disable
+
+        flatpickr("#dateInput", {
+            disable: disabledDates.map(date => new Date(date)), // Convert string dates to Date objects
+            dateFormat: "Y-m-d" // Format for the input
+        });
+    </script>
+</body>
+</html>
