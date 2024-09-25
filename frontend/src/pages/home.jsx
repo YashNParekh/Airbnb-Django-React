@@ -7,7 +7,7 @@ export default function Home() {
     
     const handleSubmit = async () => {
         try {
-            const res = await api.post("/api/create-user/",{email:"yashdad4605@gmail.com",username:"test4",password:"12345",phone_number:"798791755379"});
+            const res = await api.post("/api/create-user/",{email:"yashdad4615@gmail.com",username:"test5",password:"123451"});
             console.log(res.data);
         } catch (error) {
             console.log(error);

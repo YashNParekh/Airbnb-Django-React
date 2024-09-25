@@ -140,18 +140,18 @@ def edit_emergency_contact(request):
     else:
         return JsonResponse({'message': 'Invalid request'}, status=400)
 
-from .models import CustomUser
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def GetToken(request):
+def check_unique1(req):
+    if req.method == 'POST':
+        email = req.data.get('email')
+        phone_number = req.data.get('phone_number')
+        try :
+            if email : CustomUser.objects.get(email=email)
+            if phone_number : CustomUser.objects.get(phone_number=phone_number)
+            return JsonResponse({'message': 'exists'}, status=200)
+        except :
+            return JsonResponse({'message': 'not exist'},status=200)
 
-    pn = request.data.get('email')
-    user = CustomUser.objects.get(email=pn)
-    refresh = RefreshToken.for_user(user)
 
-    return JsonResponse(
-     {
-        'refresh': str(refresh),
-        'access': str(refresh.access_token),
-        },
-        status = 200)

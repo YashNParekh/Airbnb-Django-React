@@ -9,6 +9,7 @@ urlpatterns = [
     path('edit-emergency-contact/', views.edit_emergency_contact, name='edit_emergency_contact'),
     path('send-phone/', views.send_phone_otp, name='send_phone'),
     path('verify-phone/', views.verify_phone_otp, name='verify_phone'),
-    path('get-token/',views.GetToken, name='get_token'),
+    path("verify-existing/", views.check_unique1, name="verify_existing"),
+    
     
 ]

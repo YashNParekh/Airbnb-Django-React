@@ -1,5 +1,4 @@
 import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
-
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -11,72 +10,120 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Eye, EyeOff } from "lucide-react";
-
-
+import api from '../api';
 
 const SignUpForm = forwardRef((props, ref) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+
+
+  
 
   const buttonRef = useRef();
   
   useImperativeHandle(ref, () => ({
     click: () => {
-      buttonRef.current.click(); // Trigger the button click
+      buttonRef.current.click();
     }
   }));
-  
-  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const checkPasswordStrength = (password) => {
-    // This is a simple check. You might want to implement a more robust solution.
-    if (password.length < 8) return "weak";
-    if (password.match(/[a-z]/) && password.match(/[A-Z]/) && password.match(/[0-9]/) && password.match(/[^a-zA-Z0-9]/))
-      return "strong";
-    return "medium";
+  const validateEmail = (email) => {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    const hasNonAlphas = /\W/.test(password);
+    return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers && hasNonAlphas;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newErrors = {};
+
+    if (!validateEmail(email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+
+    if (!validatePassword(password)) {
+      newErrors.password = "Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    try {
+      const res = await api.post("/api/create-user/",{email:email,username:username,password:password});
+
+
+      // if (res==)
+
+      
+            
+      
+      if (response.ok) {
+        console.log('Signup successful');
+        // Handle successful signup (e.g., show a success message, redirect)
+      } else {
+        console.error('Signup failed');
+        // Handle errors (e.g., show error message)
+      }
+    } catch (error) {
+      console.error('Error during signup:', error);
+      // Handle network errors
+    }
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button 
-            style={{"display":"none"}}
-        
-        variant="outline" ref={buttonRef}></Button>
+          style={{"display":"none"}}
+          variant="outline" 
+          ref={buttonRef}
+        ></Button>
       </DialogTrigger>
       
       <DialogContent className="sm:max-w-[425px] bg-white">
         <DialogHeader>
-          <DialogTitle>Finish signing up</DialogTitle>
+          <DialogTitle>Sign Up</DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="first-name">Legal name</Label>
-            <Input id="first-name" placeholder="First name on ID" />
-            <Input id="last-name" placeholder="Last name on ID" />
-            <p className="text-sm text-gray-500">
-              Make sure this matches the name on your government ID. If you go by another name, you
-              can add a preferred first name.
-            </p>
+            <Label htmlFor="email">Email</Label>
+            <Input 
+              id="email" 
+              type="email" 
+              placeholder="Enter your email"
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="dob">Date of birth</Label>
-            <Input id="dob" type="date" />
-            <p className="text-sm text-gray-500">
-              To sign up, you need to be at least 18. Your birthday won't be shared with other people
-              who use Airbnb.
-            </p>
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="email">Contact info</Label>
-            <Input id="email" type="email" placeholder="Email" defaultValue="ganpatajmera12@gmail.com" />
-            <p className="text-sm text-gray-500">
-              We'll email you trip confirmations and receipts.
-            </p>
+            <Label htmlFor="username">Username</Label>
+            <Input 
+              id="username" 
+              type="text" 
+              value={username} 
+              placeholder="Enter your username"
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
@@ -84,9 +131,10 @@ const SignUpForm = forwardRef((props, ref) => {
               <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="Password"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <Button
                 type="button"
@@ -98,23 +146,12 @@ const SignUpForm = forwardRef((props, ref) => {
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </Button>
             </div>
-            <div className="text-sm">
-              <p>Password strength: {checkPasswordStrength(password)}</p>
-              <ul className="list-disc list-inside">
-                <li>Can't contain your name or email address</li>
-                <li>At least 8 characters</li>
-                <li>Contains a number or symbol</li>
-              </ul>
-            </div>
+            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
           </div>
-        </div>
-        <p className="text-sm text-gray-500">
-          By selecting Agree and continue, I agree to Airbnb's Terms of Service, Payments Terms of
-          Service, and Nondiscrimination Policy and acknowledge the Privacy Policy.
-        </p>
-        <Button className="w-full bg-[#ff385c] hover:bg-[#d90b63] text-white">
-          Agree and continue
-        </Button>
+          <Button type="submit" className="w-full bg-[#ff385c] hover:bg-[#d90b63] text-white">
+            Sign Up
+          </Button>
+        </form>
       </DialogContent>
     </Dialog>
   );

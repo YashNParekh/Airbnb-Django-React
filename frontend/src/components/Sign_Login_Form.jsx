@@ -34,7 +34,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import FinalSign_Login_Form from "./FinalSign_Login_Form";
 
-const Sign_Login_Form = forwardRef((props, ref) => {
+const Sign_Login_Form = forwardRef((props1, ref) => {
   const countryCodes = [
     { code: "+1", country: "US", flag: "🇺🇸" },
     { code: "+44", country: "GB", flag: "🇬🇧" },
@@ -60,6 +60,7 @@ const Sign_Login_Form = forwardRef((props, ref) => {
 
   const [loginMethod, setLoginMethod] = useState("phone");
   const [selectedCountry, setSelectedCountry] = useState(countryCodes[2]); // Default to India
+  const [props,setProps] = useState()
 
   const toggleLoginMethod = () => {
     setLoginMethod(loginMethod === "phone" ? "email" : "phone");
@@ -212,7 +213,7 @@ const Sign_Login_Form = forwardRef((props, ref) => {
               <InputOTP
                 maxLength={6}
                 value={otpValues}
-                onChange={(value) => setValue(value)}
+                onChange={(value) => setOtpValues(value)}
               >
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />
@@ -248,6 +249,10 @@ const Sign_Login_Form = forwardRef((props, ref) => {
                         onClick: () => console.log("Undo"),
                       },
                     });
+
+
+                    
+
                     buttonRef1.current.click();
                     buttonRef2.current.click();
                   } else {
@@ -273,7 +278,7 @@ const Sign_Login_Form = forwardRef((props, ref) => {
         </Dialog>
       </>
 
-      <FinalSign_Login_Form ref={buttonRef2} loginMethod={loginMethod} />
+      <FinalSign_Login_Form ref={buttonRef2} props={props} />
     </>
   );
 });
