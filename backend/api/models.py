@@ -25,7 +25,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, null=False) 
     username = models.CharField(max_length=200, unique=True)
     email = models.EmailField(_('email address'), unique=True)
-    phone_number = models.CharField(_('phone number'), max_length=15, unique=True ,blank=True)
+    phone_number = models.CharField(_('phone number'), max_length=15, default="")
     is_email_verified = models.BooleanField(_('email verified'), default=False)
     is_phone_verified = models.BooleanField(_('phone verified'), default=False)
     date_of_birth = models.DateField(_('date of birth'), null=True, blank=True)
