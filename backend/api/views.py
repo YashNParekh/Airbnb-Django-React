@@ -6,32 +6,18 @@ from django.conf import settings
 from rest_framework import generics,viewsets
 from .models import CustomUser
 from rest_framework.permissions import AllowAny,IsAuthenticated
-from .serializers import UserSerializer
+from .serializers import CustomUserSerializer
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class CreateUserView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = CustomUserSerializer
     permission_classes = [AllowAny]
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        if request.data.get('is_email_verified') == 'true':
-            CustomUser.objects.filter(id=response.data.get('id')).update(is_email_verified=True)
-        else:
-            CustomUser.objects.filter(id=response.data.get('id')).update(is_email_verified=False)
-        if request.data.get('is_phone_verified') == 'true':
-            CustomUser.objects.filter(id=response.data.get('id')).update(is_phone_verified=True)
-        else:
-            CustomUser.objects.filter(id=response.data.get('id')).update(is_phone_verified=False)
-        if CustomUser.objects.filter(phone_number=request.data.get('phone_number')).exists():
-            return JsonResponse({"message": "Phone number is already taken"}, status=400)
-        if CustomUser.objects.filter(email=request.data.get('email')).exists():
-            return JsonResponse({"message": "Email is already taken"}, status=400)
-        return response
-
+        
 class EditProfileView(generics.UpdateAPIView):
     queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = CustomUserSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
@@ -40,6 +26,12 @@ class EditProfileView(generics.UpdateAPIView):
 def generate_otp():
     return str(random.randint(100000, 999999))
 
+class UserDetailView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CustomUserSerializer
+
+    def get_object(self):
+        return self.request.user
 
 
 
@@ -147,3 +139,19 @@ def edit_emergency_contact(request):
         return JsonResponse({'message': 'Emergency contact edited successfully'})
     else:
         return JsonResponse({'message': 'Invalid request'}, status=400)
+
+from .models import CustomUser
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def GetToken(request):
+
+    pn = request.data.get('email')
+    user = CustomUser.objects.get(email=pn)
+    refresh = RefreshToken.for_user(user)
+
+    return JsonResponse(
+     {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+        },
+        status = 200)
