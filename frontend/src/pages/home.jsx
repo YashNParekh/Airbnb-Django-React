@@ -2,7 +2,7 @@
 import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
 import api from "../api";
-
+import { Link } from "react-router-dom";
 import { toast } from "sonner"
 
 import Navbar2 from "../components/navbar2";
@@ -27,9 +27,10 @@ export default function Home() {
 
       <Navbar2 />
       
-      <button onClick={handleSubmit} className="w-full text-center">
+      {/* <button onClick={handleSubmit} className="w-full text-center">
         click
-      </button>
+      </button> */}
+      <Link className="text-center" to="/map" >map</Link>
     
       <div className=" h-[600px] w-full block">
       <img

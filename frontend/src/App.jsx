@@ -6,6 +6,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import Navbar from "./components/navbar";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import MapComponent from "./components/MapComponent";
+
 
 import { Toaster } from "@/components/ui/sonner";
 
@@ -18,6 +20,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />}></Route>
+          <Route path="map" element={<MapComponent />}></Route>
+          
           <Route
             path="profile"
             element={
