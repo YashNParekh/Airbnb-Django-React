@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'api', #one of the aplication we adde in main folder
     'rest_framework',
-    
+    'rest_framework.authtoken',
     # this is for something when you use diffrent origion 
     'channels',
 ]
@@ -105,7 +105,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # info: here if you uncmment this then any type of api call is not worked 
         # info: for authnticated you use Isauthenticated that block if user not have any access token 
-        # "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
