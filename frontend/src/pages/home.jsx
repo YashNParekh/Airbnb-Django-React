@@ -1,6 +1,7 @@
 
 import React from "react";
 import { Separator } from "@/components/ui/separator";
+import { Link } from "react-router-dom";
 import {
   Accordion,
   AccordionContent,
@@ -29,16 +30,15 @@ const Home = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
 
-      <div>
-        <button onClick={handel}>Click</button>
-      </div>
-      {/* <Navbar2 /> */}
+      <Navbar2 />
 
       <img
         data-lg-size="1600-2400"
         className="mx-auto w-full cursor-pointer"
         alt=""
         src="https://airbnb-app.vercel.app/Images/banner_airbnb.webp"
+        // src="homepage.jpg"
+
       />
       <main className="container mx-auto px-4 py-8">
         <section className="mb-12">

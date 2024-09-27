@@ -28,6 +28,9 @@ INSTALLED_APPS = [
     'api', #one of the aplication we adde in main folder
     'rest_framework',
     'rest_framework.authtoken',
+    'hotel',
+    'django_filters',
+    
     # this is for something when you use diffrent origion 
     'channels',
 ]
@@ -96,6 +99,9 @@ USE_TZ = True
 STATIC_URL = "static/"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

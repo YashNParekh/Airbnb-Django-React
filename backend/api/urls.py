@@ -12,5 +12,4 @@ urlpatterns = [
     path("verify-existing/", views.check_unique1, name="verify_existing"),
     path("token-number/", views.Token_by_PhoneNumber, name="token_number"),
     path("user/", views.UserDetailView.as_view(), name="token_email"),
-    
 ]
