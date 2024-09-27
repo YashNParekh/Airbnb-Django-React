@@ -2,13 +2,12 @@ import airbnb from "../assets/airbnb.png";
 import { Search, Globe, Menu, User } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Separator } from "./ui/separator";
 import Sign_Login_Form from "./Sign_Login_Form";
 
 import { toast } from "sonner";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import { useNavigate } from "react-router-dom";
-
+import { SearchBar } from "./SearchBar";
 
 import {
   Menubar,
@@ -73,89 +72,50 @@ export default function Navbar() {
 
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex h-fit flex-col justify-center bg-black">
       <div>
         {
           //info: left pannel
         }
 
-        <div className="flex flex-row justify-between m-6 px-6">
+        <div className="group flex flex-row justify-between m-6 px-6">
           <Link to={"/"}>
             <div className=" w-[35px] h-[35px] flex flex-row items-center">
               <img
                 height={"10px"}
                 widht={"10px"}
-                className="float-left "
+                className="float-left  brightness-75 group-hover:brightness-100 group-hover:transition group-hover:duration-200"
                 src={airbnb}
                 alt="logo"
               />
-              <span className="font-bold p-2 text-xl">airbnb</span>
+              <span className="font-bold p-2 text-white text-xl brightness-75 group-hover:brightness-100 group-hover:transition group-hover:duration-200">airbnb</span>
             </div>
           </Link>
-
           {
             //info: search
           }
 
-          <div>
-            <div className="flex w-10  justify-around ">
-              <button
-                onClick={() => {
-                  setState("Stay");
-                }}
-              >
-                <div
-                  className={
-                    state === "Stay" ? "mx-5 text-xl font-bold" : "mx-5 text-xl"
-                  }
-                >
-                  {" "}
-                  Stay{" "}
-                </div>
-              </button>
-              <button
-                onClick={() => {
-                  setState("Experiences");
-                }}
-              >
-                <div
-                  className={
-                    state === "Experiences"
-                      ? "mx-5 text-xl font-bold"
-                      : "mx-5 text-xl"
-                  }
-                >
-                  {" "}
-                  Experiences{" "}
-                </div>
-              </button>
-            </div>
-          </div>
+          <SearchBar />
 
+          
           {
             //info: right panel
           }
 
           <div>
-            <div className="flex items-center">
-              <button className=" font-medium px-4 py-2 rounded-full hover:bg-gray-100 text-lg">
+            <div className="flex items-center gap-2">
+              <button className="bg-gray-200 truncate whitespace-nowrap font-medium px-4 py-2 rounded-full hover:bg-gray-100 text-lg">
                 Airbnb your home
               </button>
-              <button className="p-2 rounded-full hover:bg-gray-100">
+              <button className="p-2 rounded-full bg-gray-50 hover:bg-white">
                 <Globe className="h-6 w-6" />
               </button>
-              <div className="ml-4 flex items-center border border-gray-300 rounded-full p-2">
-                {
-                  // info:
-                  // <Menu className="h-5 w-5 mr-2" />
-                  // <User className="h-8 w-8 bg-gray-500 rounded-full text-white p-1" />
-                }
-
-                <Menubar>
-                  <MenubarMenu>
-                    <MenubarTrigger>
-                      <Menu className="h-5 w-5 mr-2 " />
-                      <User className="h-8 w-8 bg-gray-500 rounded-full text-white p-1" />
+              <div className="ml-4 flex items-center border bg-white border-gray-300 rounded-full p-2">
+                <Menubar >
+                  <MenubarMenu   >
+                    <MenubarTrigger >
+                      <Menu className="h-5 w-5 mr-2 bg-white" />
+                      <User className="h-8 w-8 bg-gray-500  rounded-full  text-white p-1" />
                     </MenubarTrigger>
                     <MenubarContent className="bg-white border rounded-sm">
                         {/* 
@@ -201,19 +161,7 @@ export default function Navbar() {
 
       
 
-      <div className="flex justify-center items-center w-full ">
-        <div className="w-fit  border-2 shadow-md p-3 rounded-full ">
-          <button className="bg-[#ff385c]  rounded-full ml-2 mr-2 p-4">
-            
-            
-            <Search className="h-5 w-5 text-white" />
-            
-            
-            
-          </button>
-        </div>
-      </div>
-
+     
       <Sign_Login_Form ref={signUpButtonRef} />
     </div>
   );

@@ -400,7 +400,12 @@ const Sign_Login_Form = forwardRef((props1, ref) => {
               try {
                 console.log("emailInput", emailInput);
                 console.log("password",openPassword );
+
                 const res = await api.post("/api/token/", { email:emailInput, password:openPassword });
+                
+                localStorage.setItem(ACCESS_TOKEN, res.data.access);
+                localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+
                 try {
                   const response = await api.get("/api/user/"); // Ensure the leading slash is included
                   toast.success("Welcome back " + response.data.username, {
@@ -408,20 +413,12 @@ const Sign_Login_Form = forwardRef((props1, ref) => {
                     action: {
                       label: "X",
                     },
-                  });
-                  
-                  
+                  });                  
                 } catch (error) {
                   console.error("Error fetching user data:", error);
                 }
-                
-                
-                
                 email_pass_ref.current.click();
 
-
-                localStorage.setItem(ACCESS_TOKEN, res.data.access);
-                localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
 
                 
                 

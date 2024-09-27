@@ -32,9 +32,10 @@ function App() {
           />
         </Routes>
         <Footer className="w-full " />
-      </BrowserRouter>
 
-      <Toaster />
+        <Toaster className="bottom-0 z-50" />
+      </BrowserRouter>
+            
     </>
   );
 }
