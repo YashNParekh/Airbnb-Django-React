@@ -35,8 +35,8 @@ class Property(models.Model):
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField()
-    property_type = models.ForeignKey(PropertyType, on_delete=models.SET_NULL, null=True)
-    location_type = models.ForeignKey(LocationType, on_delete=models.SET_NULL, null=True)
+    property_type = models.CharField(max_length=100)
+    location_type = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=100, db_index=True)  # Indexed for performance
     state = models.CharField(max_length=100)

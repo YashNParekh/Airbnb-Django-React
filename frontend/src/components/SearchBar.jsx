@@ -7,7 +7,7 @@ export const SearchBar = () => {
 
   return (
     <div className="flex justify-center items-center w-full ">
-      <div className="ml-40  w-[40%] flex flex-row text-gray-500 justify-between items-center  border-2 shadow-md p-3 rounded-full ">
+      <div className="ml-40  w-[25%] flex flex-row text-gray-500 justify-between items-center  border-2 shadow-md p-3 rounded-full ">
         
       <div>
             <div className="flex w-10  justify-around ">
@@ -31,22 +31,7 @@ export const SearchBar = () => {
                 className="bg-gray-500 h-6 mx-2"
               />
 
-              <button
-                onClick={() => {
-                  setState("Experiences");
-                }}
-              >
-                <div
-                  className={
-                    state === "Experiences"
-                      ? "mx-5 text-xl text-white"
-                      : "mx-5 text-xl "
-                  }
-                >
-                  {" "}
-                  Experiences{" "}
-                </div>
-              </button>
+             
             
             </div>
 

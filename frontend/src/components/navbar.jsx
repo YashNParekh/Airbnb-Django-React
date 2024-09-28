@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import { useNavigate } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
-
+import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
 import {
   Menubar,
   MenubarContent,
@@ -22,7 +22,6 @@ import {
 export default function Navbar() {
   const [state, setState] = useState("Stay");
   const navigate = useNavigate();
-  
 
   const signUpButtonRef = useRef();
 
@@ -38,7 +37,7 @@ export default function Navbar() {
             Sign Up
           </button>
         </MenubarItem>
-        
+
         <MenubarItem>
           <button
             onClick={() => {
@@ -54,22 +53,24 @@ export default function Navbar() {
 
   const Log_sign2 = () => {
     return (
-      
-      <MenubarItem>
-        <button
-          onClick={() => {
-            navigate('/profile')
-          }}
-        >
-          Profile
-        </button>
-      </MenubarItem>
-
-    )
-  }
-
-
-
+      <>
+        <MenubarItem>
+          <button
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
+            Profile
+          </button>
+        </MenubarItem>
+        <MenubarItem>
+          <div>
+            <Link to={"/hotels"}>MyHome</Link>
+          </div>
+        </MenubarItem>
+      </>
+    );
+  };
 
   return (
     <div className="flex h-fit flex-col justify-center bg-black">
@@ -88,7 +89,9 @@ export default function Navbar() {
                 src={airbnb}
                 alt="logo"
               />
-              <span className="font-bold p-2 text-white text-xl brightness-75 group-hover:brightness-100 group-hover:transition group-hover:duration-200">airbnb</span>
+              <span className="font-bold p-2 text-white text-xl brightness-75 group-hover:brightness-100 group-hover:transition group-hover:duration-200">
+                airbnb
+              </span>
             </div>
           </Link>
           {
@@ -97,7 +100,6 @@ export default function Navbar() {
 
           <SearchBar />
 
-          
           {
             //info: right panel
           }
@@ -108,21 +110,30 @@ export default function Navbar() {
                 Airbnb your home
               </button>
               <button className="p-2 rounded-full bg-gray-50 hover:bg-white">
-                <Globe className="h-6 w-6" />
+                
+
+                <a href="http://localhost:8501" target="_blank" rel="noopener noreferrer" >
+                <HiOutlineChatBubbleBottomCenterText />
+                
+                </a>
+
               </button>
               <div className="ml-4 flex items-center border bg-white border-gray-300 rounded-full p-2">
-                <Menubar >
-                  <MenubarMenu   >
-                    <MenubarTrigger >
+                <Menubar>
+                  <MenubarMenu>
+                    <MenubarTrigger>
                       <Menu className="h-5 w-5 mr-2 bg-white" />
                       <User className="h-8 w-8 bg-gray-500  rounded-full  text-white p-1" />
                     </MenubarTrigger>
                     <MenubarContent className="bg-white border rounded-sm">
-                        {/* 
+                      {/* 
                         // info: this is for sign up and login button this only turn if the user is not logged in
                         */}
-                      {!localStorage.getItem(ACCESS_TOKEN) ? <Log_sign /> : <Log_sign2 />}
-                        
+                      {!localStorage.getItem(ACCESS_TOKEN) ? (
+                        <Log_sign />
+                      ) : (
+                        <Log_sign2 />
+                      )}
 
                       {/* ---- */}
                       <MenubarSeparator className="border" />
@@ -130,22 +141,17 @@ export default function Navbar() {
                       <MenubarItem>Airbnb your home</MenubarItem>
                       <MenubarItem>Host an experience </MenubarItem>
                       <MenubarItem>Help Center</MenubarItem>
-                      {
-                        localStorage.getItem(ACCESS_TOKEN) && (
-                          <MenubarItem
-                            onClick={() => {
-                              localStorage.removeItem(ACCESS_TOKEN);
-                              localStorage.removeItem(REFRESH_TOKEN);
-                              navigate("/");
-                            }}
-                            
-                          >
-                            Logout
-                          </MenubarItem>
-                        )
-                      }
-                      
-                      
+                      {localStorage.getItem(ACCESS_TOKEN) && (
+                        <MenubarItem
+                          onClick={() => {
+                            localStorage.removeItem(ACCESS_TOKEN);
+                            localStorage.removeItem(REFRESH_TOKEN);
+                            navigate("/");
+                          }}
+                        >
+                          Logout
+                        </MenubarItem>
+                      )}
                     </MenubarContent>
                   </MenubarMenu>
                 </Menubar>
@@ -159,9 +165,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      
-
-     
       <Sign_Login_Form ref={signUpButtonRef} />
     </div>
   );
